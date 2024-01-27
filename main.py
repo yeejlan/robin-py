@@ -90,7 +90,7 @@ async def connect(sid, environ, auth):
         print('auth ', user)
     client = redis.Redis.from_pool(redis_pool)
     await client.set(f'{redis_prefix}_{user["uid"]}_{user["cid"]}', sid, ex=3600)
-    #await client.close()
+    await client.aclose()
 
 @sio.event
 async def disconnect(sid):
