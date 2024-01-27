@@ -1,0 +1,5 @@
+base58
+python-dotenv
+python-socketio==5.11.0
+redis
+uvicorn

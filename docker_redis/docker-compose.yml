@@ -1,0 +1,11 @@
+version: '3.2'
+
+services:
+
+  redis-serv:
+    image: redis/redis-stack:latest
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - 16379:6379
+    restart: unless-stopped
