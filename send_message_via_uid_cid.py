@@ -33,7 +33,11 @@ client = redis.Redis.from_pool(redis_pool)
 
 uid = 6648
 cid = 'bevy'
-sid =  client.get(f'{redis_prefix}_{uid}_{cid}').decode()
+sid =  client.get(f'{redis_prefix}_{uid}_{cid}')
+if not sid:
+    terminate(f'Error: uid={uid}, cid={cid}, sid not found')
+
+sid = sid.decode()
 print(f'uid={uid}, cid={cid}, sid={sid}')
 
 # emit an event

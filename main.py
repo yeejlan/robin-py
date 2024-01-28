@@ -88,9 +88,13 @@ async def connect(sid, environ, auth):
         return False
     if app_debug:
         print('auth ', user)
-    client = redis.Redis.from_pool(redis_pool)
-    await client.set(f'{redis_prefix}_{user["uid"]}_{user["cid"]}', sid, ex=3600)
-    await client.aclose()
+
+    try:
+        client = redis.Redis.from_pool(redis_pool)
+        await client.set(f'{redis_prefix}_{user["uid"]}_{user["cid"]}', sid, ex=3600)
+        await client.aclose()
+    except redis.exceptions.RedisError:
+        print('Save auth info error:', user)
 
 @sio.event
 async def disconnect(sid):
